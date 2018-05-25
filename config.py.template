@@ -1,0 +1,15 @@
+from KalturaClient import *
+from KalturaClient.Plugins.Core import *
+
+
+## Config (with ADMIN - beware)
+partnerId = 123456789
+config = KalturaConfiguration(partnerId)
+config.serviceUrl = "https://cdnapisec.kaltura.com/"
+client = KalturaClient(config)
+secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+userId = None
+ktype = KalturaSessionType.ADMIN
+expiry = 86400
+privileges = "disableentitlement"
+
