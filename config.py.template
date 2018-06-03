@@ -12,4 +12,5 @@ userId = None
 ktype = KalturaSessionType.ADMIN
 expiry = 86400
 privileges = "disableentitlement"
-
+entry_id = "1_u92di4mp"
+parent_kes = ""

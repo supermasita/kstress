@@ -1,5 +1,6 @@
 __pycache__/*
 *.swp
 *.pyc
+*.csv
 config.py
 python/*
