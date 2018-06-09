@@ -3,8 +3,9 @@ from KalturaClient import *
 from KalturaClient.Plugins.Core import *
 import requests
 import random
+import time
 from config import *
-import threading
+import re
 
 # Client config
 config = KalturaConfiguration(partnerId)
@@ -23,25 +24,39 @@ class WebsiteTasks(TaskSet):
 	@task
 	def vod_stress(self):
 		if 1 in entry_type_dict.values():	
-			enn = random.choice([entry_id for entry_id, entry_type in entry_type_dict.items() if entry_type != 7])
-			self.client.get(random.choice(entry_segments_dict[enn]))
+			entry = random.choice([entry_id for entry_id, entry_type in entry_type_dict.items() if entry_type != 7])
+			for segment in get_vod_segments(entry):
+				self.client.get(segment)
         
 	@task
 	def live_stress(self):
 		if 7 in entry_type_dict.values():	
-			enn = random.choice([entry_id for entry_id, entry_type in entry_type_dict.items() if entry_type == 7])
-			self.client.get(random.choice(entry_segments_dict[enn]))
-
+			entry = random.choice([entry_id for entry_id, entry_type in entry_type_dict.items() if entry_type == 7])
+			seq_last_prev = 0
+			while True:
+				segments = get_live_segments(entry)
+				seq_last = int(re.search('seg-.*\.ts',segments[-1]).group(0).split("-")[1])
+				# Compare the last segment to see if there are any new ones
+				if seq_last > seq_last_prev:
+					for segment in segments:
+						seq = int(re.search('seg-.*\.ts',segment).group(0).split("-")[1])
+						# Avoid already requested segments
+						if seq > seq_last_prev:
+							self.client.get(segment)
+							seq_last_prev = seq
+				else:
+					# No new segments? Wait.
+					time.sleep(6)
 
 class WebsiteUser(HttpLocust):
 	task_set = WebsiteTasks
-	min_wait = 5000
-	max_wait = 15000
+	min_wait = 1000
+	max_wait = 5000
 
 def start_session():
-	""" Use configuration to generate KS
+	""" Use configuration to generate KS.
 	"""
-	# should add session cache
+	# should I add session cache ?
 	ks = client.session.start(secret, userId, ktype, partnerId, expiry, privileges)
 	client.setKs(ks)
 
@@ -86,6 +101,8 @@ def get_vod_segments(entry_id):
 
 
 def get_live_m3u8(entry_id):
+	""" Returns live m3u8 (string).
+	"""
 	version = None
 	result = client.baseEntry.get(entry_id, version)	
 	
@@ -112,52 +129,14 @@ def get_live_segments(entry_id):
 							live_segments_list.append(base_url + line)
 	return live_segments_list
 
-def update_live(update_live_stop):
-	""" Updates live segments every 60 seconds.
-	"""
-	print("Updating live segments...")
-	update_live_segments_dict(entry_type_dict)
-	if not update_live_stop.is_set():
-        	# call update_live() again in 30 seconds
-        	threading.Timer(60, update_live, [update_live_stop]).start()
-
-#def create_segments_dict(entry_type_dict):
-#	entry_segments_dict = {}
-#	for entry_id,entry_type in entry_type_dict.items():
-#		if entry_type != 7:
-#			entry_segments_dict[entry_id] = get_vod_segments(entry_id)
-#		else:
-#			entry_segments_dict[entry_id] = get_live_segments(entry_id)
-#	
-#	return entry_segments_dict
-
-def update_vod_segments_dict(entry_type_dict):
-	for entry_id,entry_type in entry_type_dict.items():
-		if entry_type != 7:
-			entry_segments_dict[entry_id] = get_vod_segments(entry_id)
-	
-
-def update_live_segments_dict(entry_type_dict):
-	for entry_id,entry_type in entry_type_dict.items():
-		if entry_type == 7:
-			entry_segments_dict[entry_id] = get_live_segments(entry_id)
-	
-
 
 
 # Run!
+print("Starting session...")
 start_session()
 
+print("Checking entry types...")
 global entry_type_dict
-global entry_segments_dict
-entry_segments_dict = {}
-
 entry_type_dict = check_entry_types(entry_id)
 
-entry_segments_dict = {}
-update_vod_segments_dict(entry_type_dict)
-
-#update_live_segments_dict(entry_type_dict)
-update_live_stop = threading.Event()
-update_live(update_live_stop)
 
