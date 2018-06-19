@@ -22,3 +22,12 @@ kStress is a implementation of [Locust](https://locust.io/) to test [Kaltura's e
 $ locust -f kstress.py --host http://192.168.0.102/
 ```
 * Connect to Locust WebUI (ex: http://127.0.0.1:8089) and start stressing!
+
+#### Screenshots:
+
+![screenshot01](https://imgur.com/oJOsn8w)
+![screenshot02](https://imgur.com/cD0Cpcz)
+![screenshot03](https://imgur.com/jss7tB9)
+![screenshot04](https://imgur.com/Wh927fh)
+![screenshot05](https://imgur.com/eFS1gah)
+
