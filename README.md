@@ -2,6 +2,9 @@
 
 kStress is a implementation of [Locust](https://locust.io/) to test [Kaltura's eCDN](https://corp.kaltura.com/products/kaltura-ecdn/) KES nodes.
 
+#### Note:
+This code is not created nor supported by Kaltura.
+
 #### Features:
 * Test multiple entries at the same time (VOD and LIVE)
 * LIVE: mimic player behaviour when pulling new segments
@@ -11,6 +14,7 @@ kStress is a implementation of [Locust](https://locust.io/) to test [Kaltura's e
 #### Requirements:
 * [Locust](https://locust.io/)
 * [Kaltura's Python client library](http://www.kaltura.com/api_v3/testme/client-libs.php)
+* A Kaltura eCDN license and at least one installed KES node
 
 #### How to use:
 * Install Locust
