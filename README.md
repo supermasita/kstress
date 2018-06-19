@@ -25,9 +25,9 @@ $ locust -f kstress.py --host http://192.168.0.102/
 
 #### Screenshots:
 
-![screenshot01](https://imgur.com/oJOsn8w)
-![screenshot02](https://imgur.com/cD0Cpcz)
-![screenshot03](https://imgur.com/jss7tB9)
-![screenshot04](https://imgur.com/Wh927fh)
-![screenshot05](https://imgur.com/eFS1gah)
+![screenshot01](https://imgur.com/oJOsn8w.jpg)
+![screenshot02](https://imgur.com/cD0Cpcz.jpg)
+![screenshot03](https://imgur.com/jss7tB9.jpg)
+![screenshot04](https://imgur.com/Wh927fh.jpg)
+![screenshot05](https://imgur.com/eFS1gah.jpg)
 
