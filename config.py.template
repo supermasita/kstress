@@ -1,16 +1,13 @@
-from KalturaClient import *
-from KalturaClient.Plugins.Core import *
+# Config 
+partnerId = 12345678
+serviceUrl = "https://cdnapisec.kaltura.com/"
+admin_secret = "XxXxXXXXXxxxxxXXxXxXxxx"
 
+# Entry id can be unique or multiple comma separated
+# VOD and LIVE can be mixed
+# entry_id = "1_u92di4mp,1_l1j9eutp,0_84l9v532"
+entry_id = ""
 
-## Config (with ADMIN - beware)
-partnerId = 123456789
-config = KalturaConfiguration(partnerId)
-config.serviceUrl = "https://cdnapisec.kaltura.com/"
-client = KalturaClient(config)
-secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-userId = None
-ktype = KalturaSessionType.ADMIN
-expiry = 86400
-privileges = "disableentitlement"
-entry_id = "1_u92di4mp"
+# Not implemented yet
 parent_kes = ""
+
