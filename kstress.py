@@ -16,7 +16,6 @@ secret = admin_secret
 userId = None
 expiry = 86400
 privileges = "disableentitlement"
-
 serviceUrl_scheme = serviceUrl.split(":")[0] 
 
 #
@@ -70,6 +69,7 @@ def start_session():
                               partnerId, expiry, privileges)
     client.setKs(ks)
 
+    return ks
 
 def check_entry_types(entry_id):
     """ Checks entry ids and returns a dictionary with {id: type}
@@ -102,8 +102,8 @@ def get_vod_m3u8_urls(entry_id):
     pager = None
     result = client.flavorAsset.list(filter, pager)
     for flavor in result.objects:
-        flavours_m3u8_url = ("%s/p/%i/sp/%i00/playManifest/entryId/%s/flavorIds/%s/format/applehttp/protocol/%s/a.m3u8" %
-                (serviceUrl, partnerId, partnerId, entry_id, flavor.id, serviceUrl_scheme))
+        flavours_m3u8_url = ("%s/p/%i/sp/%i00/playManifest/entryId/%s/flavorIds/%s/format/applehttp/protocol/%s/a.m3u8?ks=%s" %
+                (serviceUrl, partnerId, partnerId, entry_id, flavor.id, serviceUrl_scheme, ks))
 
         flavours_m3u8 = requests.get(flavours_m3u8_url)
 
@@ -158,7 +158,7 @@ def get_live_segments(entry_id):
 
 # Run!
 print("Starting session...")
-start_session()
+ks = start_session()
 
 print("Checking entry types...")
 global entry_type_dict
