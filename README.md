@@ -10,8 +10,8 @@ This code is not created nor supported by Kaltura.
 * LIVE: mimic player behaviour when pulling new segments
 * Easy configuration
 * Locust will hit a KES based on the eCDN delivery rules, as normal user would do
-** Parent-child supported
-** "API gateway" not yet supported
+  * Parent-child supported
+  * "API gateway" not yet supported
 
 #### Requirements:
 * [Locust](https://locust.io/)
@@ -31,17 +31,17 @@ $ locust -f kstress.py
 
 #### How to use (multi server):
 * On all servers:
-** Install Locust 
-** Install Kaltura's Python client library
-** Clone this code 
-** Rename config.py.template to config.py and edit as needed (PID, secret, entries)
+  * Install Locust 
+  * Install Kaltura's Python client library
+  * Clone this code 
+  * Rename config.py.template to config.py and edit as needed (PID, secret, entries)
 * On master server:
-** Run Locust, specifying the file and master: 
+  * Run Locust, specifying the file and master: 
 ```
 $ locust -f kstress.py --master
 ```
 * On slave servers:
-** Run Locust, specifying the file and master: 
+  * Run Locust, specifying the file and master: 
 ```
 $ locust -f kstress.py --master-host={IP_OF_THE_MASTER_SERVER}
 ```
