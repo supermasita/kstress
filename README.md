@@ -24,9 +24,9 @@ This code is not created nor supported by Kaltura.
 * Clone this code
 * Rename config.py.template to config.py and edit as needed (PID, secret, entries)
 * Run Locust, specifying the file: 
-```
-$ locust -f kstress.py 
-```
+  ```
+  $ locust -f kstress.py 
+  ```
 * Connect to Locust WebUI (ex: http://127.0.0.1:8089) and start stressing!
 
 #### How to use (multi server):
@@ -37,14 +37,14 @@ $ locust -f kstress.py
   * Rename config.py.template to config.py and edit as needed (PID, secret, entries)
 * On master server:
   * Run Locust, specifying the file and master: 
-```
-$ locust -f kstress.py --master
-```
+  ```
+  $ locust -f kstress.py --master
+  ```
 * On slave servers:
   * Run Locust, specifying the file and master: 
-```
-$ locust -f kstress.py --master-host={IP_OF_THE_MASTER_SERVER}
-```
+  ```
+  $ locust -f kstress.py --master-host={IP_OF_THE_MASTER_SERVER}
+  ```
 * Connect to Locust WebUI on master (ex: http://127.0.0.1:8089) and start stressing!
 
 #### Screenshots:
