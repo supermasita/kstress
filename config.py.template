@@ -1,13 +1,13 @@
 # Config 
 partnerId = 12345678
+# serviceUrl must include the scheme - ex: https://cdnapisec.kaltura.com/
 serviceUrl = "https://cdnapisec.kaltura.com/"
-admin_secret = "XxXxXXXXXxxxxxXXxXxXxxx"
+#
+admin_secret = "xxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 # Entry id can be unique or multiple comma separated
 # VOD and LIVE can be mixed
-# entry_id = "1_u92di4mp,1_l1j9eutp,0_84l9v532"
-entry_id = ""
-
-# Not implemented yet
-parent_kes = ""
+# NOTE: Entitlements are not currently supported
+#entry_id = "1_u92di4mp,1_l1j9eutp,0_84l9v532"
+entry_id = "1_n05m9jxy"
 
